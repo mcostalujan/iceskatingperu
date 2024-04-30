@@ -110,9 +110,13 @@ File: Main Css File
 @import "pages/fashion";
 
 
-//rtl file 
+//rtl file
 // @import "rtl/apps/apps";
 // @import "rtl/components/components";
 // @import "rtl/pages/pages";
 // @import "rtl/plugins/plugins";
 // @import "rtl/structure/structure";
+
+
+//validation
+@import "validation/formvalidation";

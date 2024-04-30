@@ -1,11 +1,13 @@
+import { UserModel } from './../models/user.model_backup';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { map, catchError, switchMap, finalize } from 'rxjs/operators';
-import { UserModel } from '../models/user.model';
 import { AuthModel } from '../models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ResponseModel } from '../models/response.model';
+import { UserDto } from '../dto/user.dto';
 
 export type UserType = UserModel | undefined;
 
@@ -47,9 +49,8 @@ export class AuthService implements OnDestroy {
   login(username: string, password: string): Observable<UserType> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.login(username, password).pipe(
-      map((auth: any) => {
-        console.log(JSON.stringify(auth));
-        const result = this.setAuthFromLocalStorage(auth);
+      map((auth: ResponseModel) => {
+        const result = this.setAuthFromLocalStorage(UserDto.fromObject(auth.resultData));
         return result;
       }),
       switchMap(() => this.getUserByToken()),
@@ -70,12 +71,12 @@ export class AuthService implements OnDestroy {
 
   getUserByToken(): Observable<UserType> {
     const auth = this.getAuthFromLocalStorage();
-    if (!auth || !auth.authToken) {
+    if (!auth) {
       return of(undefined);
     }
 
     this.isLoadingSubject.next(true);
-    return this.authHttpService.getUserByToken(auth.authToken).pipe(
+    return this.authHttpService.getUserByToken(auth).pipe(
       map((user: UserType) => {
         if (user) {
           this.currentUserSubject.next(user);
@@ -112,23 +113,23 @@ export class AuthService implements OnDestroy {
   }
 
   // private methods
-  private setAuthFromLocalStorage(auth: AuthModel): boolean {
+  private setAuthFromLocalStorage(auth: UserDto): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
-    if (auth && auth.authToken) {
+    if (auth && auth.jwt_token) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
       return true;
     }
     return false;
   }
 
-  private getAuthFromLocalStorage(): AuthModel | undefined {
+  private getAuthFromLocalStorage(): string | undefined {
     try {
       const lsValue = localStorage.getItem(this.authLocalStorageToken);
       if (!lsValue) {
         return undefined;
       }
 
-      const authData = JSON.parse(lsValue);
+      const authData = lsValue.toString();
       return authData;
     } catch (error) {
       console.error(error);

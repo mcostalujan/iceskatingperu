@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/core/services/auth.service_new';
-import { UserModel } from 'src/app/core/models/user.model';
+import { UserModelV2 } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-signin-basic',
@@ -61,9 +61,8 @@ export class SigninBasicComponent implements OnInit, OnDestroy {
         this.defaultAuth.username,
         Validators.compose([
           Validators.required,
-          Validators.email,
-          Validators.minLength(3),
-          Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.minLength(8),
+          Validators.maxLength(11), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
       password: [
@@ -89,7 +88,7 @@ export class SigninBasicComponent implements OnInit, OnDestroy {
     const loginSubscr = this.authService
       .login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
-      .subscribe((user: UserModel | undefined) => {
+      .subscribe((user: UserModelV2 | undefined) => {
         console.log(JSON.stringify(user));
         if (user) {
           this.router.navigate([this.returnUrl]);

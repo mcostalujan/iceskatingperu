@@ -7,7 +7,7 @@ export const environment = {
   appVersion: 'v1.0',
   USERDATA_KEY: 'authf649fc9a5f55',
   defaultauth: 'fackbackend',
-  apiUrl: 'api',
+  apiUrl: 'http://localhost:8080',
   firebaseConfig: {
     apiKey: '',
     authDomain: '',

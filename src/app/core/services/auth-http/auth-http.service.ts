@@ -1,11 +1,11 @@
+import { UserModel } from './../../models/user.model_backup';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserModel } from '../../models/user.model';
 import { AuthModel } from '../../models/auth.model';
 import { environment } from 'src/environments/environment';
 
-const API_USERS_URL = `${environment.apiUrl}/auth`;
+const API_USERS_URL = `${environment.apiUrl}/user`;
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,7 @@ export class AuthHTTPService {
 
   // public methods
   login(username: string, password: string): Observable<any> {
-    // return this.http.post<AuthModel>(`${API_USERS_URL}/login`, {
-    return this.http.post<AuthModel>(`http://localhost:8080/user/login`, {
+    return this.http.post<AuthModel>(`${API_USERS_URL}/login`, {
       username,
       password,
     });
