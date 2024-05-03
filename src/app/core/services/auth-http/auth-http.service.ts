@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthModel } from '../../models/auth.model';
 import { environment } from 'src/environments/environment';
+import { ResponseModel } from '../../models/response.model';
 
 const API_USERS_URL = `${environment.apiUrl}/user`;
 
@@ -33,12 +34,10 @@ export class AuthHTTPService {
     });
   }
 
-  getUserByToken(token: string): Observable<UserModel> {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    return this.http.get<UserModel>(`${API_USERS_URL}/me`, {
-      headers: httpHeaders,
-    });
+  getUserByToken(token: string): Observable<any> {
+    // const httpHeaders = new HttpHeaders({
+    //   Authorization: `Bearer ${token}`,
+    // });
+    return this.http.get<any>(`${API_USERS_URL}/getUserFromToken/${token}`);
   }
 }

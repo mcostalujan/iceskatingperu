@@ -19,7 +19,6 @@ export class UserDto {
   static fromObject(obj: any): UserDto {
     const userDto = new UserDto();
     const fieldMap: { [key: string]: keyof UserDto } = {
-      // Map field names from any object to UserDto properties
       lastLogin: 'lastLogin',
       updatedBy: 'updatedBy',
       'jwt-token': 'jwt_token',

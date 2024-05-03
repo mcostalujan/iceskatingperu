@@ -4,7 +4,7 @@ import { Subscription, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from 'src/app/core/services/auth.service_new';
+import { AuthServiceV2 } from 'src/app/core/services/auth.service';
 import { UserModelV2 } from 'src/app/core/models/user.model';
 
 @Component({
@@ -30,7 +30,7 @@ export class SigninBasicComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthServiceV2,
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService
@@ -89,7 +89,6 @@ export class SigninBasicComponent implements OnInit, OnDestroy {
       .login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe((user: UserModelV2 | undefined) => {
-        console.log(JSON.stringify(user));
         if (user) {
           this.router.navigate([this.returnUrl]);
         } else {
@@ -110,7 +109,6 @@ export class SigninBasicComponent implements OnInit, OnDestroy {
       translatedMessage = res; // Assign the translated value
     });
 
-    console.log(translatedMessage);
     return translatedMessage; // Return the translated message (may still be empty if not yet available)
   }
 }

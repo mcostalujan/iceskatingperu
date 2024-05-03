@@ -1,105 +1,154 @@
-import { Injectable } from '@angular/core';
-// import { getFirebaseBackend } from '../../authUtils';
-import { User } from '../models/auth.models';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
-// import { GlobalComponent } from "../../global-component";
+import { UserModel } from '../models/user.model_backup';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
+import { map, catchError, switchMap, finalize } from 'rxjs/operators';
+import { AuthHTTPService } from './auth-http';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { ResponseModel } from '../models/response.model';
+import { UserDto } from '../dto/user.dto';
+import { UserModelV2 } from '../models/user.model';
+export type UserType = UserModelV2 | undefined;
 
-// const AUTH_API = GlobalComponent.AUTH_API;
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthServiceV2 implements OnDestroy {
+  // private fields
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  // public fields
+  currentUser$: Observable<UserType>;
+  isLoading$: Observable<boolean>;
+  currentUserSubject: BehaviorSubject<UserType>;
+  isLoadingSubject: BehaviorSubject<boolean>;
 
+  get currentUserValue(): UserType {
+    return this.currentUserSubject.value;
+  }
 
-@Injectable({ providedIn: 'root' })
+  set currentUserValue(user: UserType) {
+    this.currentUserSubject.next(user);
+  }
 
-/**
- * Auth-service Component
- */
-export class AuthenticationService {
+  constructor(
+    private authHttpService: AuthHTTPService,
+    private router: Router
+  ) {
+    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
+    this.currentUser$ = this.currentUserSubject.asObservable();
+    this.isLoading$ = this.isLoadingSubject.asObservable();
+    const subscr = this.getUserByToken().subscribe();
+    this.unsubscribe.push(subscr);
+  }
 
-    user!: User;
-    currentUserValue: any;
+  // public methods
+  login(username: string, password: string): Observable<UserType> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.login(username, password).pipe(
+      map((auth: ResponseModel) => {
+        const result = this.setAuthFromLocalStorage(UserDto.fromObject(auth.resultData.user));
+        // const loginResponse = UserModelV2.fromUserDtoToUserModelV2(UserDto.fromObject(auth));
+        return result;
+      }),
+      switchMap(() => this.getUserByToken()),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
 
-    private currentUserSubject: BehaviorSubject<User>;
-    // public currentUser: Observable<User>;
+  logout() {
+    // localStorage.removeItem(this.authLocalStorageToken);
+    // this.router.navigate(['/auth/logout-basic'], {
+    //   queryParams: {},
+    // }).then(() => {
+    //   document.location.reload();
+    // });
 
-    constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')!));
-        // this.currentUser = this.currentUserSubject.asObservable();
-     }
+    localStorage.removeItem(this.authLocalStorageToken);
+    console.log("1");
+    this.router.navigate(['/auth/logout-basic'], {
+      queryParams: {},
+    });
+    console.log("2");
+  }
 
-    /**
-     * Performs the register
-     * @param email email
-     * @param password password
-     */
-    register(email: string, first_name: string, password: string) {
-        // return getFirebaseBackend()!.registerUser(email, password).then((response: any) => {
-        //     const user = response;
-        //     return user;
-        // });
-
-        // Register Api
-        // return this.http.post(AUTH_API + 'signup', {
-        return this.http.post('AUTH_API' + 'signup', {
-            email,
-            first_name,
-            password,
-          }, httpOptions);
+  getUserByToken(): Observable<UserType> {
+    const auth = this.getAuthFromLocalStorage();
+    if (!auth) {
+      return of(undefined);
     }
 
-    /**
-     * Performs the auth
-     * @param email email of user
-     * @param password password of user
-     */
-    login(email: string, password: string) {
-        // return getFirebaseBackend()!.loginUser(email, password).then((response: any) => {
-        //     const user = response;
-        //     return user;
-        // });
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.getUserByToken(auth).pipe(
+      map((responseModel: ResponseModel) => {
+        let user;
+        if (responseModel.resultData.user) {
+          user = UserModelV2.fromUserDtoToUserModelV2(UserDto.fromObject(responseModel.resultData.user));
+          this.currentUserSubject.next(user);
+        } else {
+          this.logout();
+        }
+        return user;
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
 
-        // return this.http.post(AUTH_API + 'signin', {
-        return this.http.post('AUTH_API' + 'signin', {
-            email,
-            password
-          }, httpOptions);
+  // need create new user then login
+  registration(user: UserModel): Observable<any> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.createUser(user).pipe(
+      map(() => {
+        this.isLoadingSubject.next(false);
+      }),
+      switchMap(() => this.login(user.email, user.password)),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  forgotPassword(email: string): Observable<boolean> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService
+      .forgotPassword(email)
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  // private methods
+  private setAuthFromLocalStorage(auth: UserDto): boolean {
+    // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+    if (auth && auth.jwt_token) {
+      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth.jwt_token));
+      return true;
     }
+    return false;
+  }
 
-    /**
-     * Returns the current user
-     */
-    public currentUser(): any {
-        // return getFirebaseBackend()!.getAuthenticatedUser();
-        return null;
+  private getAuthFromLocalStorage(): string | undefined {
+    try {
+      const lsValue = localStorage.getItem(this.authLocalStorageToken);
+      if (!lsValue) {
+        return undefined;
+      }
+
+      const authData = lsValue.toString();
+      return authData;
+    } catch (error) {
+      console.error(error);
+      return undefined;
     }
+  }
 
-    /**
-     * Logout the user
-     */
-    logout() {
-        // logout the user
-        // return getFirebaseBackend()!.logout();
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('token');
-        this.currentUserSubject.next(null!);
-    }
-
-    /**
-     * Reset password
-     * @param email email
-     */
-    resetPassword(email: string) {
-        // return getFirebaseBackend()!.forgetPassword(email).then((response: any) => {
-        //     const message = response.data;
-        //     return message;
-        // });
-
-        return null;
-    }
-
+  ngOnDestroy() {
+    this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
 }
-
