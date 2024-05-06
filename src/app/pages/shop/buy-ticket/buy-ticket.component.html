@@ -5,14 +5,72 @@
 <app-breadcrumbs title="Comprar Entrada" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
 
-<section class="section">
+<form [formGroup]="buyNowForm">
+  <!-- Your form elements here -->
 
 
-</section>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Seleccione el día"
+           formControlName="selectedDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-<section class="section pt-0">
 
-</section>
+  <div class="radio-container">
+    <label>
+      <input type="radio" formControlName="minutesDuration" [value]="15">
+      15 minutos
+    </label>
+    <label>
+      <input type="radio" formControlName="minutesDuration" [value]="25">
+      25 minutos
+    </label>
+    <label>
+      <input type="radio" formControlName="minutesDuration" [value]="45">
+      45 minutos
+    </label>
+  </div>
+
+
+
+  <div class="checkbox-container">
+    <!-- Clothing Section -->
+    <div class="checkbox-item">
+      <label>
+        <input type="checkbox" formControlName="clothingSocks">
+        Socks - 7 dollars
+      </label>
+    </div>
+    <div class="checkbox-item">
+      <label>
+        <input type="checkbox" formControlName="clothingGloves">
+        Gloves - 7 dollars
+      </label>
+    </div>
+
+    <!-- Equipment Section -->
+    <div class="checkbox-item">
+      <label>
+        <input type="checkbox" formControlName="equipmentFoquita25">
+        Foquita - 25 minutes - 5 dollars
+      </label>
+    </div>
+    <div class="checkbox-item">
+      <label>
+        <input type="checkbox" formControlName="equipmentFoquita55">
+        Foquita - 55 minutes - 10 dollars
+      </label>
+    </div>
+  </div>
+
+
+
+  <button class="buy-now-button" (click)="buyNow()">BUY NOW</button>
+
+
+
+</form>
 
 
 <app-features></app-features>

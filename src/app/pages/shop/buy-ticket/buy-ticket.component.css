@@ -1,0 +1,81 @@
+.example-events {
+  width: 30rem;
+  height: 200px;
+  border: 1px solid #555;
+  overflow: auto;
+}
+
+
+.radio-container {
+  display: flex; /* Display horizontally on desktop */
+  flex-direction: column; /* Display vertically on mobile */
+
+  /* Optional: Add spacing between radio buttons */
+  gap: 10px;
+}
+
+/* Style individual radio buttons (customize as needed) */
+.radio-container label {
+  /* Add any styling you want for the labels */
+}
+
+@media (min-width: 768px) {
+  .radio-container {
+    flex-direction: row;
+  }
+}
+
+
+.checkbox-container {
+  display: flex; /* Display horizontally on desktop */
+  flex-direction: column; /* Display vertically on mobile */
+  gap: 10px; /* Add spacing between checkbox items */
+}
+
+/* Style individual checkbox items (customize as needed) */
+.checkbox-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .checkbox-container {
+    flex-direction: row;
+  }
+}
+
+
+/* buy-now-button.component.css */
+
+.buy-now-button {
+  margin-top: 2rem;
+  background-color: #007bff; /* Blue color (customize as needed) */
+  color: #fff; /* Text color */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+
+  /* Optional: Add hover effect */
+  &:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100vh; /* Set the form height to 100% of the viewport height */
+}
+
+.radio-container,
+.checkbox-container {
+  margin-top: 20px;
+}

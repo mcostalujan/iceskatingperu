@@ -13,6 +13,8 @@ import { SharedModule } from "primeng/api";
 // Language
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -36,7 +38,9 @@ export function createTranslateLoader(http: HttpClient): any {
     BrowserAnimationsModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync('noop')
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
