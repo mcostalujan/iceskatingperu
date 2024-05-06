@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { productData, latest_arrival } from './data';
 import { interval, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface Tutorial {
   title?: string;
@@ -94,7 +95,8 @@ export class IndexComponent {
   productData: any;
   tutorials: Tutorial[] = [];
 
-  constructor(private primengConfig: PrimeNGConfig) {
+  constructor(private primengConfig: PrimeNGConfig,
+    private router: Router) {
   }
 
 
@@ -267,6 +269,13 @@ export class IndexComponent {
    */
   getSeconds(t: number) {
     return Math.floor((t / 1000) % 60);
+  }
+
+
+  goToBuyTicketPage(){
+    this.router.navigate(['/shop/buy-ticket'], {
+      queryParams: {},
+    });
   }
 
 }

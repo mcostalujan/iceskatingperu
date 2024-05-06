@@ -25,9 +25,10 @@ import { OrderHistoryComponent } from "./order-history/order-history.component";
 import { ShopCartComponent } from "./shop-cart/shop-cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { WishlistComponent } from "./wishlist/wishlist.component";
+import { BuyTicketComponent } from './buy-ticket/buy-ticket.component';
 
 @NgModule({
-  declarations: [AddressComponent, TrackOrderComponent, PaymentComponent, ReviewComponent, ConfirmationComponent, OrderHistoryComponent, ShopCartComponent, CheckoutComponent, WishlistComponent],
+  declarations: [AddressComponent, TrackOrderComponent, PaymentComponent, ReviewComponent, ConfirmationComponent, OrderHistoryComponent, ShopCartComponent, CheckoutComponent, WishlistComponent, BuyTicketComponent],
   imports: [CommonModule, ShopRoutingModule, SharedModule, DialogModule, FormsModule, ReactiveFormsModule, TabViewModule, NgxMasonryModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

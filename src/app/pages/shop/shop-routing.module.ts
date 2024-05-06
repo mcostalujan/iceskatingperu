@@ -9,6 +9,7 @@ import { ReviewComponent } from "./review/review.component";
 import { ShopCartComponent } from "./shop-cart/shop-cart.component";
 import { TrackOrderComponent } from "./track-order/track-order.component";
 import { WishlistComponent } from "./wishlist/wishlist.component";
+import { BuyTicketComponent } from "./buy-ticket/buy-ticket.component";
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: "wishlist",
     component: WishlistComponent,
+  },
+  {
+    path: "buy-ticket",
+    component: BuyTicketComponent,
   },
 ];
 
