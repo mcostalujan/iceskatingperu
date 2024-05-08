@@ -1,0 +1,105 @@
+class OrderDto {
+  createdAt?: string;
+  createdBy?: string;
+  customerId?: string;
+  flexstring0?: string;
+  flexstring1?: string;
+  flexstring2?: string;
+  flexstring3?: string;
+  flexstring4?: string;
+  flexstring5?: string;
+  flexstring6?: string;
+  flexstring7?: string;
+  flexstring8?: string;
+  flexstring9?: string;
+  flexFloat0?: string;
+  flexFloat1?: string;
+  flexFloat2?: string;
+  flexFloat3?: string;
+  flexFloat4?: string;
+  flexFloat5?: string;
+  flexFloat6?: string;
+  flexFloat7?: string;
+  flexFloat8?: string;
+  flexFloat9?: string;
+  flexInt0?: string;
+  flexInt1?: string;
+  flexInt2?: string;
+  flexInt3?: string;
+  flexInt4?: string;
+  flexInt5?: string;
+  flexInt6?: string;
+  flexInt7?: string;
+  flexInt8?: string;
+  flexInt9?: string;
+  flexString0?: string;
+  flexString1?: string;
+  flexString2?: string;
+  flexString3?: string;
+  flexString4?: string;
+  flexString5?: string;
+  flexString6?: string;
+  flexString7?: string;
+  flexString8?: string;
+  flexString9?: string;
+  orderDefRelId?: string;
+  orderId?: string;
+  upstringdAt?: string;
+  upstringdBy?: string;
+
+  static fromObject(object: any): OrderDto {
+    const orderDto: OrderDto = {};
+
+    if (object) {
+      orderDto.createdBy = object.createdBy ?? undefined;
+      orderDto.createdAt = object.createdAt ?? undefined;
+      orderDto.upstringdAt = object.upstringdAt ?? undefined;
+      orderDto.upstringdBy = object.upstringdBy ?? undefined;
+      orderDto.flexstring0 = object.flexstring0 ?? undefined;
+      orderDto.flexstring1 = object.flexstring1 ?? undefined;
+      orderDto.flexstring2 = object.flexstring2 ?? undefined;
+      orderDto.flexstring3 = object.flexstring3 ?? undefined;
+      orderDto.flexstring4 = object.flexstring4 ?? undefined;
+      orderDto.flexstring5 = object.flexstring5 ?? undefined;
+      orderDto.flexstring6 = object.flexstring6 ?? undefined;
+      orderDto.flexstring7 = object.flexstring7 ?? undefined;
+      orderDto.flexstring8 = object.flexstring8 ?? undefined;
+      orderDto.flexstring9 = object.flexstring9 ?? undefined;
+      orderDto.flexFloat0 = object.flexFloat0 ?? undefined;
+      orderDto.flexFloat1 = object.flexFloat1 ?? undefined;
+      orderDto.flexFloat2 = object.flexFloat2 ?? undefined;
+      orderDto.flexFloat3 = object.flexFloat3 ?? undefined;
+      orderDto.flexFloat4 = object.flexFloat4 ?? undefined;
+      orderDto.flexFloat5 = object.flexFloat5 ?? undefined;
+      orderDto.flexFloat6 = object.flexFloat6 ?? undefined;
+      orderDto.flexFloat7 = object.flexFloat7 ?? undefined;
+      orderDto.flexFloat8 = object.flexFloat8 ?? undefined;
+      orderDto.flexFloat9 = object.flexFloat9 ?? undefined;
+      orderDto.flexInt0 = object.flexInt0 ?? undefined;
+      orderDto.flexInt1 = object.flexInt1 ?? undefined;
+      orderDto.flexInt2 = object.flexInt2 ?? undefined;
+      orderDto.flexInt3 = object.flexInt3 ?? undefined;
+      orderDto.flexInt4 = object.flexInt4 ?? undefined;
+      orderDto.flexInt5 = object.flexInt5 ?? undefined;
+      orderDto.flexInt6 = object.flexInt6 ?? undefined;
+      orderDto.flexInt7 = object.flexInt7 ?? undefined;
+      orderDto.flexInt8 = object.flexInt8 ?? undefined;
+      orderDto.flexInt9 = object.flexInt9 ?? undefined;
+      orderDto.flexString0 = object.flexString0 ?? undefined;
+      orderDto.flexString1 = object.flexString1 ?? undefined;
+      orderDto.flexString2 = object.flexString2 ?? undefined;
+      orderDto.flexString3 = object.flexString3 ?? undefined;
+      orderDto.flexString4 = object.flexString4 ?? undefined;
+      orderDto.flexString5 = object.flexString5 ?? undefined;
+      orderDto.flexString6 = object.flexString6 ?? undefined;
+      orderDto.flexString7 = object.flexString7 ?? undefined;
+      orderDto.flexString8 = object.flexString8 ?? undefined;
+      orderDto.flexString9 = object.flexString9 ?? undefined;
+      orderDto.orderId = object.orderId ?? undefined;
+      orderDto.orderDefRelId = object.orderDefRelId ?? undefined;
+      orderDto.customerId = object.customerId ?? undefined;
+    }
+
+    return orderDto;
+  }
+}

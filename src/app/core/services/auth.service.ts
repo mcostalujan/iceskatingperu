@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ResponseModel } from '../models/response.model';
 import { UserDto } from '../dto/user.dto';
-import { UserModelV2 } from '../models/user.model';
+import { UserModelV2 } from '../models/backend/user.model';
 export type UserType = UserModelV2 | undefined;
 
 @Injectable({

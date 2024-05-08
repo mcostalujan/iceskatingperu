@@ -8,20 +8,23 @@ class ProductDefRelease {
   productTypeId?: number;
   releaseNumber?: number;
 
-  static fromObject(json: any): ProductDefRelease {
-    const productDefRel = new ProductDefRelease();
-    productDefRel.createdAt = json.createdAt
-      ? new Date(json.createdAt)
-      : undefined;
-    productDefRel.updatedAt = json.updatedAt
-      ? new Date(json.updatedAt)
-      : undefined;
-    productDefRel.updatedBy = json.updatedBy ?? undefined;
-    productDefRel.createdBy = json.createdBy ?? undefined;
-    productDefRel.enabled = json.enabled ?? undefined;
-    productDefRel.productDefRelId = json.productDefRelId ?? undefined;
-    productDefRel.productTypeId = json.productTypeId ?? undefined;
-    productDefRel.releaseNumber = json.releaseNumber ?? undefined;
+  static fromObject(object: any): ProductDefRelease {
+    const productDefRel: ProductDefRelease = {};
+
+    if (object) {
+      productDefRel.createdAt = object.createdAt
+        ? new Date(object.createdAt)
+        : undefined;
+      productDefRel.updatedAt = object.updatedAt
+        ? new Date(object.updatedAt)
+        : undefined;
+      productDefRel.updatedBy = object.updatedBy ?? undefined;
+      productDefRel.createdBy = object.createdBy ?? undefined;
+      productDefRel.enabled = object.enabled ?? undefined;
+      productDefRel.productDefRelId = object.productDefRelId ?? undefined;
+      productDefRel.productTypeId = object.productTypeId ?? undefined;
+      productDefRel.releaseNumber = object.releaseNumber ?? undefined;
+    }
     return productDefRel;
   }
 }

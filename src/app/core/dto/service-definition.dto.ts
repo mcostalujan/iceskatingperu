@@ -10,18 +10,21 @@ class ServiceDefinitionDto {
   updatedBy?: string;
   enabled?: string;
 
-  static fromObject(json: any): ServiceDefinitionDto {
-    const serviceDef = new ServiceDefinitionDto();
-    serviceDef.createdAt = json.createdAt ?? undefined;
-    serviceDef.updatedAt = json.updatedAt ?? undefined;
-    serviceDef.updatedBy = json.updatedBy ?? undefined;
-    serviceDef.createdBy = json.createdBy ?? undefined;
-    serviceDef.enabled = json.enabled ?? undefined;
-    serviceDef.serviceDefId = json.serviceDefId ?? undefined;
-    serviceDef.serviceTypeId = json.serviceTypeId ?? undefined;
-    serviceDef.serviceDefRelId = json.serviceDefRelId ?? undefined;
-    serviceDef.columnDescription = json.columnDescription ?? undefined;
-    serviceDef.columnName = json.columnName ?? undefined;
-    return serviceDef;
+  static fromObject(object: any): ServiceDefinitionDto {
+    const serviceDefDto: ServiceDefinitionDto = {};
+
+    if (object) {
+      serviceDefDto.createdAt = object.createdAt ?? undefined;
+      serviceDefDto.updatedAt = object.updatedAt ?? undefined;
+      serviceDefDto.updatedBy = object.updatedBy ?? undefined;
+      serviceDefDto.createdBy = object.createdBy ?? undefined;
+      serviceDefDto.enabled = object.enabled ?? undefined;
+      serviceDefDto.serviceDefId = object.serviceDefId ?? undefined;
+      serviceDefDto.serviceTypeId = object.serviceTypeId ?? undefined;
+      serviceDefDto.serviceDefRelId = object.serviceDefRelId ?? undefined;
+      serviceDefDto.columnDescription = object.columnDescription ?? undefined;
+      serviceDefDto.columnName = object.columnName ?? undefined;
+    }
+    return serviceDefDto;
   }
 }

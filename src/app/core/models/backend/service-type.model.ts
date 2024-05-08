@@ -8,20 +8,24 @@ class ServiceType {
   enabled?: boolean;
   serviceTypeId?: number;
 
-  static fromObject(json: any): ServiceType {
-    const serviceType = new ServiceType();
-    serviceType.createdAt = json.createdAt
-      ? new Date(json.createdAt)
-      : undefined;
-    serviceType.updatedAt = json.updatedAt
-      ? new Date(json.updatedAt)
-      : undefined;
-    serviceType.updatedBy = json.updatedBy ?? undefined;
-    serviceType.createdBy = json.createdBy ?? undefined;
-    serviceType.enabled = json.enabled ?? undefined;
-    serviceType.identifierCode = json.identifierCode ?? undefined;
-    serviceType.identifierDescription = json.identifierDescription ?? undefined;
-    serviceType.serviceTypeId = json.serviceTypeId ?? undefined;
+  static fromObject(object: any): ServiceType {
+    const serviceType: ServiceType = {};
+
+    if (object) {
+      serviceType.createdAt = object.createdAt
+        ? new Date(object.createdAt)
+        : undefined;
+      serviceType.updatedAt = object.updatedAt
+        ? new Date(object.updatedAt)
+        : undefined;
+      serviceType.updatedBy = object.updatedBy ?? undefined;
+      serviceType.createdBy = object.createdBy ?? undefined;
+      serviceType.enabled = object.enabled ?? undefined;
+      serviceType.identifierCode = object.identifierCode ?? undefined;
+      serviceType.identifierDescription =
+        object.identifierDescription ?? undefined;
+      serviceType.serviceTypeId = object.serviceTypeId ?? undefined;
+    }
     return serviceType;
   }
 }

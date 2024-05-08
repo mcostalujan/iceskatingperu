@@ -8,16 +8,20 @@ class ServiceTypeDto {
   enabled?: string;
   serviceTypeId?: string;
 
-  static fromObject(json: any): ServiceTypeDto {
-    const serviceType = new ServiceTypeDto();
-    serviceType.createdAt = json.createdAt ?? undefined;
-    serviceType.updatedAt = json.updatedAt ?? undefined;
-    serviceType.updatedBy = json.updatedBy ?? undefined;
-    serviceType.createdBy = json.createdBy ?? undefined;
-    serviceType.enabled = json.enabled ?? undefined;
-    serviceType.identifierCode = json.identifierCode ?? undefined;
-    serviceType.identifierDescription = json.identifierDescription ?? undefined;
-    serviceType.serviceTypeId = json.serviceTypeId ?? undefined;
-    return serviceType;
+  static fromObject(object: any): ServiceTypeDto {
+    const serviceTypeDto: ServiceTypeDto = {};
+
+    if (object) {
+      serviceTypeDto.createdAt = object.createdAt ?? undefined;
+      serviceTypeDto.updatedAt = object.updatedAt ?? undefined;
+      serviceTypeDto.updatedBy = object.updatedBy ?? undefined;
+      serviceTypeDto.createdBy = object.createdBy ?? undefined;
+      serviceTypeDto.enabled = object.enabled ?? undefined;
+      serviceTypeDto.identifierCode = object.identifierCode ?? undefined;
+      serviceTypeDto.identifierDescription =
+        object.identifierDescription ?? undefined;
+      serviceTypeDto.serviceTypeId = object.serviceTypeId ?? undefined;
+    }
+    return serviceTypeDto;
   }
 }

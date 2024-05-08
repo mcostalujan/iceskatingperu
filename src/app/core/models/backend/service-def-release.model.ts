@@ -8,20 +8,23 @@ class ServiceDefRelease {
   serviceTypeId?: number;
   releaseNumber?: number;
 
-  static fromObject(json: any): ServiceDefRelease {
-    const serviceDefRel = new ServiceDefRelease();
-    serviceDefRel.createdAt = json.createdAt
-      ? new Date(json.createdAt)
-      : undefined;
-    serviceDefRel.updatedAt = json.updatedAt
-      ? new Date(json.updatedAt)
-      : undefined;
-    serviceDefRel.updatedBy = json.updatedBy ?? undefined;
-    serviceDefRel.createdBy = json.createdBy ?? undefined;
-    serviceDefRel.enabled = json.enabled ?? undefined;
-    serviceDefRel.serviceDefRelId = json.serviceDefRelId ?? undefined;
-    serviceDefRel.serviceTypeId = json.serviceTypeId ?? undefined;
-    serviceDefRel.releaseNumber = json.releaseNumber ?? undefined;
+  static fromObject(object: any): ServiceDefRelease {
+    const serviceDefRel: ServiceDefRelease = {};
+
+    if (object) {
+      serviceDefRel.createdAt = object.createdAt
+        ? new Date(object.createdAt)
+        : undefined;
+      serviceDefRel.updatedAt = object.updatedAt
+        ? new Date(object.updatedAt)
+        : undefined;
+      serviceDefRel.updatedBy = object.updatedBy ?? undefined;
+      serviceDefRel.createdBy = object.createdBy ?? undefined;
+      serviceDefRel.enabled = object.enabled ?? undefined;
+      serviceDefRel.serviceDefRelId = object.serviceDefRelId ?? undefined;
+      serviceDefRel.serviceTypeId = object.serviceTypeId ?? undefined;
+      serviceDefRel.releaseNumber = object.releaseNumber ?? undefined;
+    }
     return serviceDefRel;
   }
 }

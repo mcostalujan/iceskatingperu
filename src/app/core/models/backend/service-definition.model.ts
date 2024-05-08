@@ -10,22 +10,26 @@ class ServiceDefinition {
   updatedBy?: string;
   enabled?: boolean;
 
-  static fromObject(json: any): ServiceDefinition {
-    const serviceDef = new ServiceDefinition();
-    serviceDef.createdAt = json.createdAt
-      ? new Date(json.createdAt)
-      : undefined;
-    serviceDef.updatedAt = json.updatedAt
-      ? new Date(json.updatedAt)
-      : undefined;
-    serviceDef.updatedBy = json.updatedBy ?? undefined;
-    serviceDef.createdBy = json.createdBy ?? undefined;
-    serviceDef.enabled = json.enabled ?? undefined;
-    serviceDef.serviceDefId = json.serviceDefId ?? undefined;
-    serviceDef.serviceTypeId = json.serviceTypeId ?? undefined;
-    serviceDef.serviceDefRelId = json.serviceDefRelId ?? undefined;
-    serviceDef.columnDescription = json.columnDescription ?? undefined;
-    serviceDef.columnName = json.columnName ?? undefined;
+  static fromObject(object: any): ServiceDefinition {
+    const serviceDef: ServiceDefinition = {};
+
+    if (object) {
+      serviceDef.createdAt = object.createdAt
+        ? new Date(object.createdAt)
+        : undefined;
+      serviceDef.updatedAt = object.updatedAt
+        ? new Date(object.updatedAt)
+        : undefined;
+      serviceDef.updatedBy = object.updatedBy ?? undefined;
+      serviceDef.createdBy = object.createdBy ?? undefined;
+      serviceDef.enabled = object.enabled ?? undefined;
+      serviceDef.serviceDefId = object.serviceDefId ?? undefined;
+      serviceDef.serviceTypeId = object.serviceTypeId ?? undefined;
+      serviceDef.serviceDefRelId = object.serviceDefRelId ?? undefined;
+      serviceDef.columnDescription = object.columnDescription ?? undefined;
+      serviceDef.columnName = object.columnName ?? undefined;
+    }
+
     return serviceDef;
   }
 }

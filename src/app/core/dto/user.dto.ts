@@ -16,30 +16,33 @@ export class UserDto {
   updatedAt?: string;
   username?: string;
 
-  static fromObject(obj: any): UserDto {
+  static fromObject(object: any): UserDto {
     const userDto = new UserDto();
-    const fieldMap: { [key: string]: keyof UserDto } = {
-      lastLogin: 'lastLogin',
-      updatedBy: 'updatedBy',
-      'jwt-token': 'jwt_token',
-      credentialsNonExpired: 'credentialsNonExpired',
-      roles: 'roles',
-      userId: 'userId',
-      enabled: 'enabled',
-      authorities: 'authorities',
-      createdAt: 'createdAt',
-      password: 'password',
-      createdBy: 'createdBy',
-      accountNonExpired: 'accountNonExpired',
-      email: 'email',
-      accountNonLocked: 'accountNonLocked',
-      updatedAt: 'updatedAt',
-      username: 'username',
-    };
 
-    for (const key in fieldMap) {
-      if (fieldMap.hasOwnProperty(key) && obj.hasOwnProperty(key)) {
-        userDto[fieldMap[key]] = obj[key];
+    if (object) {
+      const fieldMap: { [key: string]: keyof UserDto } = {
+        lastLogin: 'lastLogin',
+        updatedBy: 'updatedBy',
+        'jwt-token': 'jwt_token',
+        credentialsNonExpired: 'credentialsNonExpired',
+        roles: 'roles',
+        userId: 'userId',
+        enabled: 'enabled',
+        authorities: 'authorities',
+        createdAt: 'createdAt',
+        password: 'password',
+        createdBy: 'createdBy',
+        accountNonExpired: 'accountNonExpired',
+        email: 'email',
+        accountNonLocked: 'accountNonLocked',
+        updatedAt: 'updatedAt',
+        username: 'username',
+      };
+
+      for (const key in fieldMap) {
+        if (fieldMap.hasOwnProperty(key) && object.hasOwnProperty(key)) {
+          userDto[fieldMap[key]] = object[key];
+        }
       }
     }
     return userDto;

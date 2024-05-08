@@ -8,16 +8,19 @@ class ProductDefReleaseDto {
   productTypeId?: string;
   releaseNumber?: string;
 
-  static fromObject(json: any): ProductDefReleaseDto {
-    const productDefRel = new ProductDefReleaseDto();
-    productDefRel.createdAt = json.createdAt ?? undefined;
-    productDefRel.updatedAt = json.updatedAt ?? undefined;
-    productDefRel.updatedBy = json.updatedBy ?? undefined;
-    productDefRel.createdBy = json.createdBy ?? undefined;
-    productDefRel.enabled = json.enabled ?? undefined;
-    productDefRel.productDefRelId = json.productDefRelId ?? undefined;
-    productDefRel.productTypeId = json.productTypeId ?? undefined;
-    productDefRel.releaseNumber = json.releaseNumber ?? undefined;
-    return productDefRel;
+  static fromObject(object: any): ProductDefReleaseDto {
+    const productDefRelDto: ProductDefReleaseDto = {};
+
+    if (object) {
+      productDefRelDto.createdAt = object.createdAt ?? undefined;
+      productDefRelDto.updatedAt = object.updatedAt ?? undefined;
+      productDefRelDto.updatedBy = object.updatedBy ?? undefined;
+      productDefRelDto.createdBy = object.createdBy ?? undefined;
+      productDefRelDto.enabled = object.enabled ?? undefined;
+      productDefRelDto.productDefRelId = object.productDefRelId ?? undefined;
+      productDefRelDto.productTypeId = object.productTypeId ?? undefined;
+      productDefRelDto.releaseNumber = object.releaseNumber ?? undefined;
+    }
+    return productDefRelDto;
   }
 }

@@ -1,27 +1,31 @@
 class ProductType {
   createdAt?: Date;
-  createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
+  createdBy?: string;
   enabled?: boolean;
   identifierCode?: string;
   identifierDescription?: string;
   productTypeId?: number;
 
-  static fromObject(json: any): ProductType {
-    const productType = new ProductType();
-    productType.createdAt = json.createdAt
-      ? new Date(json.createdAt)
-      : undefined;
-    productType.updatedAt = json.updatedAt
-      ? new Date(json.updatedAt)
-      : undefined;
-    productType.updatedBy = json.updatedBy ?? undefined;
-    productType.createdBy = json.createdBy ?? undefined;
-    productType.enabled = json.enabled ?? undefined;
-    productType.identifierCode = json.identifierCode ?? undefined;
-    productType.identifierDescription = json.identifierDescription ?? undefined;
-    productType.productTypeId = json.productTypeId ?? undefined;
+  static fromObject(object: any): ProductType {
+    const productType: ProductType = {};
+
+    if (object) {
+      productType.createdAt = object.createdAt
+        ? new Date(object.createdAt)
+        : undefined;
+      productType.updatedAt = object.updatedAt
+        ? new Date(object.updatedAt)
+        : undefined;
+      productType.updatedBy = object.updatedBy ?? undefined;
+      productType.createdBy = object.createdBy ?? undefined;
+      productType.enabled = object.enabled ?? undefined;
+      productType.identifierCode = object.identifierCode ?? undefined;
+      productType.identifierDescription =
+        object.identifierDescription ?? undefined;
+      productType.productTypeId = object.productTypeId ?? undefined;
+    }
     return productType;
   }
 }

@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthServiceV2 } from 'src/app/core/services/auth.service';
-import { UserModelV2 } from 'src/app/core/models/user.model';
+import { UserModelV2 } from 'src/app/core/models/backend/user.model';
 
 @Component({
   selector: 'app-signin-basic',

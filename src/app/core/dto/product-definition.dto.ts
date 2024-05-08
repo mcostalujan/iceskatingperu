@@ -1,4 +1,4 @@
-class ProductDefinitionDTO {
+class ProductDefinitionDto {
   productDefId?: string;
   productTypeId?: string;
   productDefRelId?: string;
@@ -10,22 +10,22 @@ class ProductDefinitionDTO {
   updatedBy?: string;
   enabled?: string;
 
-  static fromObject(object: any): ProductDefinitionDTO {
-    const productDef: ProductDefinitionDTO = {};
+  static fromObject(object: any): ProductDefinitionDto {
+    const productDefDto: ProductDefinitionDto = {};
 
     if (object) {
-      productDef.productDefId = object.productDefId || undefined;
-      productDef.productTypeId = object.productTypeId || undefined;
-      productDef.productDefRelId = object.productDefRelId || undefined;
-      productDef.columnDescription = object.columnDescription || undefined;
-      productDef.columnName = object.columnName || undefined;
-      productDef.createdAt = object.createdAt || undefined;
-      productDef.createdBy = object.createdBy || undefined;
-      productDef.updatedAt = object.updatedAt || undefined;
-      productDef.updatedBy = object.updatedBy || undefined;
-      productDef.enabled = object.enabled || undefined;
+      const productDefDto = new ProductDefinitionDto();
+      productDefDto.productDefId = object.productDefId ?? undefined;
+      productDefDto.productTypeId = object.productTypeId ?? undefined;
+      productDefDto.productDefRelId = object.productDefRelId ?? undefined;
+      productDefDto.columnDescription = object.columnDescription ?? undefined;
+      productDefDto.columnName = object.columnName ?? undefined;
+      productDefDto.createdAt = object.createdAt ?? undefined;
+      productDefDto.createdBy = object.createdBy ?? undefined;
+      productDefDto.updatedAt = object.updatedAt ?? undefined;
+      productDefDto.updatedBy = object.updatedBy ?? undefined;
+      productDefDto.enabled = object.enabled ?? undefined;
     }
-
-    return productDef;
+    return productDefDto;
   }
 }
