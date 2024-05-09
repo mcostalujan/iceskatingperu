@@ -1,4 +1,4 @@
-class Employee {
+export class Employee {
   employeeId?: number;
   updatedAt?: Date;
   createdAt?: Date;

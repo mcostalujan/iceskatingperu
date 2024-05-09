@@ -1,4 +1,4 @@
-class OrderDto {
+export class OrderDto {
   createdAt?: string;
   createdBy?: string;
   customerId?: string;

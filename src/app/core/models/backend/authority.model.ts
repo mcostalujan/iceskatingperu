@@ -1,4 +1,4 @@
-class Authority {
+export class Authority {
   createdAt?: Date;
   createdBy?: string;
   description?: string;

@@ -1,4 +1,4 @@
-class OrderDefReleaseDto {
+export class OrderDefReleaseDto {
   createdAt?: string;
   createdBy?: string;
   enabled?: string;

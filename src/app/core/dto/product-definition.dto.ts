@@ -1,4 +1,4 @@
-class ProductDefinitionDto {
+export class ProductDefinitionDto {
   productDefId?: string;
   productTypeId?: string;
   productDefRelId?: string;

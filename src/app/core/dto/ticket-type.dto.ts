@@ -1,4 +1,4 @@
-class TicketTypeDto {
+export class TicketTypeDto {
   createdAt?: string;
   createdBy?: string;
   updatedAt?: string;

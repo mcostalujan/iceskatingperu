@@ -1,4 +1,4 @@
-class Ticket {
+export class Ticket {
   createdBy?: string;
   createdAt?: Date;
   updatedAt?: Date;

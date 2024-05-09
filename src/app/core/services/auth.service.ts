@@ -1,13 +1,18 @@
+import { Role } from './../models/backend/role.model';
+import { UserModelV2 } from 'src/app/core/models/backend/user.model';
+import { UserService } from './user.service';
 import { UserModel } from '../models/user.model_backup';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
+import { Observable, BehaviorSubject, of, Subscription, forkJoin } from 'rxjs';
 import { map, catchError, switchMap, finalize } from 'rxjs/operators';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ResponseModel } from '../models/response.model';
 import { UserDto } from '../dto/user.dto';
-import { UserModelV2 } from '../models/backend/user.model';
+import { RoleDto } from '../dto/role.dto';
+import { AuthorityDto } from '../dto/authority.dto';
+import { Authority } from '../models/backend/authority.model';
 export type UserType = UserModelV2 | undefined;
 
 @Injectable({
@@ -34,6 +39,7 @@ export class AuthServiceV2 implements OnDestroy {
 
   constructor(
     private authHttpService: AuthHTTPService,
+    private userService: UserService,
     private router: Router
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -49,7 +55,9 @@ export class AuthServiceV2 implements OnDestroy {
     this.isLoadingSubject.next(true);
     return this.authHttpService.login(username, password).pipe(
       map((auth: ResponseModel) => {
-        const result = this.setAuthFromLocalStorage(UserDto.fromObject(auth.resultData.user));
+        const result = this.setAuthFromLocalStorage(
+          UserDto.fromObject(auth.resultData.user)
+        );
         // const loginResponse = UserModelV2.fromUserDtoToUserModelV2(UserDto.fromObject(auth));
         return result;
       }),
@@ -71,11 +79,9 @@ export class AuthServiceV2 implements OnDestroy {
     // });
 
     localStorage.removeItem(this.authLocalStorageToken);
-    console.log("1");
     this.router.navigate(['/auth/logout-basic'], {
       queryParams: {},
     });
-    console.log("2");
   }
 
   getUserByToken(): Observable<UserType> {
@@ -86,15 +92,40 @@ export class AuthServiceV2 implements OnDestroy {
 
     this.isLoadingSubject.next(true);
     return this.authHttpService.getUserByToken(auth).pipe(
-      map((responseModel: ResponseModel) => {
-        let user;
-        if (responseModel.resultData.user) {
-          user = UserModelV2.fromUserDtoToUserModelV2(UserDto.fromObject(responseModel.resultData.user));
-          this.currentUserSubject.next(user);
-        } else {
+      switchMap((responseModel: ResponseModel): Observable<UserType> => {
+        if (
+          !responseModel.resultData.user ||
+          !responseModel.resultData.user.roles ||
+          !responseModel.resultData.user.authorities
+        ) {
           this.logout();
+          return of(undefined);
         }
-        return user;
+
+        const userId = responseModel.resultData.user.userId;
+
+        return forkJoin({
+          roles: this.userService.getRolesByUser(userId),
+          authorities: this.userService.getAuthoritiesByUser(userId),
+        }).pipe(
+          map(({ roles, authorities }) => {
+            const user = UserModelV2.fromUserDtoToUserModelV2(
+              UserDto.fromObject(responseModel.resultData.user),
+              roles.map((roleDto: any) => Role.fromObject(roleDto)),
+              authorities.map((authorityDto: any) =>
+                Authority.fromObject(authorityDto)
+              )
+            );
+            console.log(user);
+            this.currentUserSubject.next(user);
+            return user;
+          }),
+          catchError((error) => {
+            console.error('Error fetching roles/authorities:', error);
+            this.logout();
+            return of(undefined);
+          })
+        );
       }),
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -127,7 +158,10 @@ export class AuthServiceV2 implements OnDestroy {
   private setAuthFromLocalStorage(auth: UserDto): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.jwt_token) {
-      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth.jwt_token));
+      localStorage.setItem(
+        this.authLocalStorageToken,
+        JSON.stringify(auth.jwt_token)
+      );
       return true;
     }
     return false;

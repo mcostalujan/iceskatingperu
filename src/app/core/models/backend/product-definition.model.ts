@@ -1,4 +1,4 @@
-class ProductDefinition {
+export class ProductDefinition {
   productDefId?: string;
   productTypeId?: string;
   productDefRelId?: string;

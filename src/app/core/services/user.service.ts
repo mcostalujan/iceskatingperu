@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { RoleDto } from '../dto/role.dto';
+import { AuthorityDto } from '../dto/authority.dto';
 
 const API_USERS_URL = `${environment.apiUrl}/user`;
 
@@ -12,7 +14,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
 
-  getRolesByUser(user_id: string): Observable<RoleDto[]> {
+  getRolesByUser(user_id: string): Observable<any> {
     return this.http.get<any>(`${API_USERS_URL}/roles/${user_id}`);
+  }
+
+  getAuthoritiesByUser(user_id: string): Observable<any> {
+    return this.http.get<any>(`${API_USERS_URL}/authorities/${user_id}`);
   }
 }

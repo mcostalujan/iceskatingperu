@@ -1,4 +1,4 @@
-class Product {
+export class Product {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;

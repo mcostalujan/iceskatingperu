@@ -1,4 +1,4 @@
-class ServiceDefRelease {
+export class ServiceDefRelease {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;

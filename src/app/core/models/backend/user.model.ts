@@ -1,6 +1,8 @@
 import { UserDto } from '../../dto/user.dto';
+import { Authority } from './authority.model';
+import { Role } from './role.model';
 
-class User {
+export class UserModelV2 {
   userId?: number;
   accountNonExpired?: boolean;
   accountNonLocked?: boolean;
@@ -18,8 +20,8 @@ class User {
   authorities?: Authority[];
   jwt_token?: string;
 
-  static fromObject(object: any): User {
-    const user: User = {};
+  static fromObject(object: any): UserModelV2 {
+    const user: UserModelV2 = {};
 
     if (object) {
       user.createdBy = object.createdBy ?? undefined;
@@ -46,8 +48,8 @@ class User {
     return user;
   }
 
-  static fromUserDtoToUserModelV2(userDto: UserDto): User {
-    const user = new User();
+  static fromUserDtoToUserModelV2(userDto: UserDto, roles: Role[], authorities: Authority[]): UserModelV2 {
+    const user = new UserModelV2();
     user.createdAt = userDto.createdAt
       ? new Date(userDto.createdAt)
       : undefined;
@@ -61,10 +63,10 @@ class User {
       : undefined;
     user.jwt_token = userDto.jwt_token;
     user.credentialsNonExpired = stringToBoolean(userDto.credentialsNonExpired);
-    user.roles = userDto.roles;
+    user.roles = roles;
     user.userId = stringToNumber(userDto.userId);
     user.enabled = stringToBoolean(userDto.enabled);
-    user.authorities = userDto.authorities;
+    user.authorities = authorities;
     user.password = userDto.password;
     user.accountNonExpired = stringToBoolean(userDto.accountNonExpired);
     user.email = userDto.email;

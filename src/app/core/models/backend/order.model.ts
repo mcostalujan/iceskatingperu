@@ -1,4 +1,4 @@
-class Order {
+export class Order {
   createdAt?: Date;
   createdBy?: string;
   customerId?: number;

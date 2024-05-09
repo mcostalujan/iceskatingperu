@@ -1,4 +1,4 @@
-class OrderDefinitionDto {
+export class OrderDefinitionDto {
   columnDescription?: string;
   columnName?: string;
   createdAt?: string;

@@ -1,4 +1,4 @@
-class OrderDefRelease {
+export class OrderDefRelease {
   createdAt?: Date;
   createdBy?: string;
   enabled?: boolean;

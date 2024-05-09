@@ -1,4 +1,4 @@
-class ServiceType {
+export class ServiceType {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;

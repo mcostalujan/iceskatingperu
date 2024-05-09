@@ -1,4 +1,4 @@
-class TicketDefinitionDto {
+export class TicketDefinitionDto {
   ticketDefId?: string;
   ticketTypeId?: string;
   ticketDefRelId?: string;

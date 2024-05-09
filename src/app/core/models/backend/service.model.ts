@@ -1,4 +1,4 @@
-class Service {
+export class Service {
   createdBy?: string;
   createdAt?: Date;
   enabled?: boolean;

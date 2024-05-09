@@ -1,4 +1,4 @@
-class TicketDefinition {
+export class TicketDefinition {
   ticketDefId?: number;
   ticketTypeId?: number;
   ticketDefRelId?: number;

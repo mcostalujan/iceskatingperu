@@ -1,4 +1,4 @@
-class RoleDto {
+export class RoleDto {
   createdAt?: string;
   createdBy?: string;
   description?: string;

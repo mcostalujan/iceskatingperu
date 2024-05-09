@@ -1,4 +1,4 @@
-class TicketDefRelease {
+export class TicketDefRelease {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;

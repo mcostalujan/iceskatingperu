@@ -1,4 +1,4 @@
-class ProductTypeDto {
+export class ProductTypeDto {
   createdAt?: string;
   updatedAt?: string;
   updatedBy?: string;

@@ -1,4 +1,4 @@
-class ServiceDefReleaseDto {
+export class ServiceDefReleaseDto {
   createdAt?: string;
   createdBy?: string;
   updatedAt?: string;

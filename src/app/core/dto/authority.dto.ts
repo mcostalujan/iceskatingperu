@@ -1,4 +1,4 @@
-class AuthorityDto {
+export class AuthorityDto {
   createdAt?: string;
   createdBy?: string;
   description?: string;

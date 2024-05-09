@@ -1,4 +1,4 @@
-class ServiceTypeDto {
+export class ServiceTypeDto {
   createdAt?: string;
   createdBy?: string;
   updatedAt?: string;

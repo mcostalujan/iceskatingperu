@@ -1,4 +1,4 @@
-class RoleHasPrivileges {
+export class RoleHasPrivileges {
   createdAt?: Date;
   createdBy?: string;
   enabled?: boolean;

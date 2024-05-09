@@ -1,4 +1,4 @@
-class ServiceDefinitionDto {
+export class ServiceDefinitionDto {
   serviceDefId?: string;
   serviceTypeId?: string;
   serviceDefRelId?: string;

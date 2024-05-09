@@ -1,4 +1,4 @@
-class ProductDefRelease {
+export class ProductDefRelease {
   createdAt?: Date;
   updatedAt?: Date;
   updatedBy?: string;

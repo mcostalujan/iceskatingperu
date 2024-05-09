@@ -1,4 +1,4 @@
-class EmployeeDto {
+export class EmployeeDto {
   employeeId?: string;
   updatedAt?: string;
   createdAt?: string;

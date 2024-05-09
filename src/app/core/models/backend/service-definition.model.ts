@@ -1,4 +1,4 @@
-class ServiceDefinition {
+export class ServiceDefinition {
   serviceDefId?: number;
   serviceTypeId?: number;
   serviceDefRelId?: number;

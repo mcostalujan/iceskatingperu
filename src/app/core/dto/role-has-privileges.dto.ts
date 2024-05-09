@@ -1,4 +1,4 @@
-class RoleHasPrivilegesDto {
+export class RoleHasPrivilegesDto {
   createdAt?: string;
   createdBy?: string;
   enabled?: string;
